@@ -281,7 +281,7 @@ namespace AnimationPlugin
                     int nBone = ( n - EIP_Start ) / 3;
                     inputs[n] = InputPortConfig<string>( sNames[nBone].c_str(), "", _HELP( "Name of the Bone" ), sHumanNames[nBone].c_str(), _UICONFIG( "ref_entity=entityId" ) );
                     inputs[n + 1] = InputPortConfig<Vec3>( sRotations[nBone].c_str(), _HELP( "Rotation of the Bone" ) );
-                    inputs[n + 2] = InputPortConfig<Vec3>( sRotations[nBone].c_str(), _HELP( "Position of the Bone" ) );
+                    inputs[n + 2] = InputPortConfig<Vec3>( sPositions[nBone].c_str(), _HELP( "Position of the Bone" ) );
                 }
 
                 inputs[EIP_End] = InputPortConfig_Null();
