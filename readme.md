@@ -1,6 +1,6 @@
 Animation Plugin for CryEngine SDK
 =====================================
-Use Text to Speech as placeholder for later recording for dialogs or keep it for computer voice or robots.
+Can be used for face animation or manual bone rotation control. (e.g. live performance stuff)
 
 Can be combined with the flite plugin to provide realtime lipsync based on speech synthesis for characters.
 
