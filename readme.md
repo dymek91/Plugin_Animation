@@ -19,7 +19,7 @@ Flownodes
  * In ```Name``` Morph Name
  * In ```Weight``` Morph Weight
  * In ```FadeDuration``` Fade in Seconds
- * In ```Duration``` "Duration in Seconds
+ * In ```Duration``` Duration in Seconds
  * In ```Repeat``` Repeat
  * Out ```Started``` Morph Started
 
