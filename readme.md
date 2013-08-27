@@ -34,6 +34,7 @@ Flownodes
  * In ```Active``` Reapply the data each frame
  * In ```Slot``` Character Slot of the Bones
  * In ```Radiant``` Radiant or degrees
+ * In ```RelativeToDefaultPose``` New Data relative to default pose
  * In ```Bone``` Name of the Bone
  * In ```Rotation``` New Rotation of the Bone
 
@@ -42,6 +43,7 @@ Flownodes
  * In ```Active``` Reapply the data each frame
  * In ```Slot``` Character Slot of the Bones
  * In ```Radiant``` Radiant or degrees
+ * In ```RelativeToDefaultPose``` New Data relative to default pose
  * In ```Bone``` Name of the Bone
  * In ```Rotation``` New Rotation of the Bone
  * In ```Position``` New Position of the Bone

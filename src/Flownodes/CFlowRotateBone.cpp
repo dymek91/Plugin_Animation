@@ -33,6 +33,7 @@ namespace AnimationPlugin
                 EIP_Active = 0,
                 EIP_Slot,
                 EIP_Radiant,
+                EIP_RelativeToDefaultPose,
                 EIP_Start,
                 EIP_End = EIP_Start + tnCount * 2,
                 EIP_Name = EIP_Start,
@@ -41,6 +42,7 @@ namespace AnimationPlugin
 
             int m_nSlot;
             bool m_bRadiant;
+            bool m_bRelativeToDefaultPose;
             PodArray<SBoneQuat> m_Bones;
 
             ICharacterInstance* m_pChar;
@@ -52,6 +54,7 @@ namespace AnimationPlugin
             {
                 m_nSlot = 0;
                 m_bRadiant = false;
+                m_bRelativeToDefaultPose = false;
                 m_pChar = NULL;
                 m_pPose = NULL;
             }
@@ -70,6 +73,7 @@ namespace AnimationPlugin
                 inputs[EIP_Active] = InputPortConfig<bool>( "Active", true, _HELP( "Reapply the data each frame" ) );
                 inputs[EIP_Slot] = InputPortConfig<int>( "Slot", 0, _HELP( "Character Slot of the Bones" ) );
                 inputs[EIP_Radiant] = InputPortConfig<bool>( "Radiant", false, _HELP( "Radiant or degrees" ) );
+                inputs[EIP_RelativeToDefaultPose] = InputPortConfig<bool>( "RelativeToDefaultPose", false, _HELP( "Data relative to Default Pose" ) );
 
                 static string sNames[tnCount];
                 static string sHumanNames[tnCount];
@@ -137,6 +141,7 @@ namespace AnimationPlugin
                             pActInfo->pGraph->SetRegularlyUpdated( pActInfo->myID, GetPortBool( pActInfo, EIP_Active ) );
                             m_bRadiant = GetPortBool( pActInfo, EIP_Radiant );
                             m_nSlot = GetPortInt( pActInfo, EIP_Slot );
+                            m_bRelativeToDefaultPose = GetPortBool( pActInfo, EIP_RelativeToDefaultPose );
 
                             m_pChar = pActInfo->pEntity ? pActInfo->pEntity->GetCharacter( m_nSlot ) : NULL;
                             m_pPose = m_pChar ? m_pChar->GetISkeletonPose() : NULL;
@@ -178,9 +183,22 @@ namespace AnimationPlugin
                                 {
                                     if ( m_Bones[n].nJointID >= 0 )
                                     {
-                                        QuatT lQuat = m_pPose->GetRelJointByID( m_Bones[n].nJointID );
-                                        lQuat.q = m_Bones[n].qQuat.q;
-                                        m_pPose->SetPostProcessQuat( m_Bones[n].nJointID, lQuat );
+                                        if ( m_bRelativeToDefaultPose )
+                                        {
+                                            QuatT qRel = m_pPose->GetDefaultRelJointByID( m_Bones[n].nJointID );
+                                            QuatT lQuat = m_pPose->GetRelJointByID( m_Bones[n].nJointID );
+                                            qRel.t = lQuat.t;
+                                            qRel.q *= m_Bones[n].qQuat.q;
+
+                                            m_pPose->SetPostProcessQuat( m_Bones[n].nJointID, qRel );
+                                        }
+
+                                        else
+                                        {
+                                            QuatT lQuat = m_pPose->GetRelJointByID( m_Bones[n].nJointID );
+                                            lQuat.q = m_Bones[n].qQuat.q;
+                                            m_pPose->SetPostProcessQuat( m_Bones[n].nJointID, lQuat );
+                                        }
                                     }
                                 }
                             }
@@ -210,6 +228,7 @@ namespace AnimationPlugin
                 EIP_Active = 0,
                 EIP_Slot,
                 EIP_Radiant,
+                EIP_RelativeToDefaultPose,
                 EIP_Start,
                 EIP_End = EIP_Start + tnCount * 3,
                 EIP_Name = EIP_Start,
@@ -219,6 +238,7 @@ namespace AnimationPlugin
 
             int m_nSlot;
             bool m_bRadiant;
+            bool m_bRelativeToDefaultPose;
             PodArray<SBoneQuat> m_Bones;
 
             ICharacterInstance* m_pChar;
@@ -230,6 +250,7 @@ namespace AnimationPlugin
             {
                 m_nSlot = 0;
                 m_bRadiant = false;
+                m_bRelativeToDefaultPose = false;
                 m_pChar = NULL;
                 m_pPose = NULL;
             }
@@ -248,6 +269,7 @@ namespace AnimationPlugin
                 inputs[EIP_Active] = InputPortConfig<bool>( "Active", true, _HELP( "Reapply the data each frame" ) );
                 inputs[EIP_Slot] = InputPortConfig<int>( "Slot", 0, _HELP( "Character Slot of the Bones" ) );
                 inputs[EIP_Radiant] = InputPortConfig<bool>( "Radiant", false, _HELP( "Radiant or degrees" ) );
+                inputs[EIP_RelativeToDefaultPose] = InputPortConfig<bool>( "RelativeToDefaultPose", true, _HELP( "Data relative to Default Pose" ) );
 
                 static string sNames[tnCount];
                 static string sHumanNames[tnCount];
@@ -319,6 +341,7 @@ namespace AnimationPlugin
                             pActInfo->pGraph->SetRegularlyUpdated( pActInfo->myID, GetPortBool( pActInfo, EIP_Active ) );
                             m_bRadiant = GetPortBool( pActInfo, EIP_Radiant );
                             m_nSlot = GetPortInt( pActInfo, EIP_Slot );
+                            m_bRelativeToDefaultPose = GetPortBool( pActInfo, EIP_RelativeToDefaultPose );
 
                             m_pChar = pActInfo->pEntity ? pActInfo->pEntity->GetCharacter( m_nSlot ) : NULL;
                             m_pPose = m_pChar ? m_pChar->GetISkeletonPose() : NULL;
@@ -366,7 +389,19 @@ namespace AnimationPlugin
                                 {
                                     if ( m_Bones[n].nJointID >= 0 )
                                     {
-                                        m_pPose->SetPostProcessQuat( m_Bones[n].nJointID, m_Bones[n].qQuat );
+                                        if ( m_bRelativeToDefaultPose )
+                                        {
+                                            QuatT qRel = m_pPose->GetDefaultRelJointByID( m_Bones[n].nJointID );
+                                            qRel.t += m_Bones[n].qQuat.t;
+                                            qRel.q *= m_Bones[n].qQuat.q;
+
+                                            m_pPose->SetPostProcessQuat( m_Bones[n].nJointID, qRel );
+                                        }
+
+                                        else
+                                        {
+                                            m_pPose->SetPostProcessQuat( m_Bones[n].nJointID, m_Bones[n].qQuat );
+                                        }
                                     }
                                 }
                             }
