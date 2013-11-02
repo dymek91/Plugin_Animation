@@ -1,8 +1,9 @@
 /* Animation_Plugin - for licensing and copyright see license.txt */
 
 #include <StdAfx.h>
-#include <Nodes/G2FlowBaseNode.h>
 #include <CPluginAnimation.h>
+#include <Nodes/G2FlowBaseNode.h>
+
 #include <IPluginAnimation.h>
 
 #include <IEntitySystem.h>
