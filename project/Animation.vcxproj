@@ -29,8 +29,6 @@
     <None Include="..\tools\build_installer.bat" />
     <None Include="..\tools\codestyle.astylerc" />
     <None Include="..\tools\stylecode.bat" />
-    <None Include="..\tools\_astyle.exe" />
-    <None Include="..\tools\_stylehelper.bat" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\CPluginAnimation.cpp" />

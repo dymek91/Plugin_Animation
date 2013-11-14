@@ -1,4 +1,4 @@
-Animation Plugin 1.1.0.0 (03.11.2013)
+Animation Plugin 1.1.0.0 (18.11.2013)
 ---------------------------
 Initial Stable Release for CryEngine 3.5.4 (32/64 bit)
 
