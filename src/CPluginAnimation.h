@@ -69,7 +69,7 @@ namespace AnimationPlugin
 
             void* GetConcreteInterface( const char* sInterfaceVersion )
             {
-                return static_cast < IPluginAnimation* > ( this );
+                return static_cast <IPluginAnimation*>( this );
             };
 
             // IPluginAnimation

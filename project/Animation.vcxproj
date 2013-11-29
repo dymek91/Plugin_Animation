@@ -157,8 +157,8 @@
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
-      <Command>cd $(ProjectDir)\..\tools
-stylecode.bat
+      <Command>call "$(ProjectDir)..\tools\stylecode.bat" "$(ProjectDir)..\"
+
             </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -187,8 +187,8 @@ stylecode.bat
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
-      <Command>cd $(ProjectDir)\..\tools
-stylecode.bat
+      <Command>call "$(ProjectDir)..\tools\stylecode.bat" "$(ProjectDir)..\"
+
             </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -221,8 +221,8 @@ stylecode.bat
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
-      <Command>cd $(ProjectDir)\..\tools
-stylecode.bat
+      <Command>call "$(ProjectDir)..\tools\stylecode.bat" "$(ProjectDir)..\"
+
             </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -253,8 +253,8 @@ stylecode.bat
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <PreBuildEvent>
-      <Command>cd $(ProjectDir)\..\tools
-stylecode.bat
+      <Command>call "$(ProjectDir)..\tools\stylecode.bat" "$(ProjectDir)..\"
+
             </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
