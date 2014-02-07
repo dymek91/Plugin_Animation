@@ -154,8 +154,12 @@ namespace AnimationPlugin
                                     // Affected Bone
                                     int nBone = ( n - EIP_Start ) / 2;
                                     string sBone = GetPortString( pActInfo, n );
-                                    m_Bones[nBone].nJointID = m_pPose ? m_pPose->GetJointIDByName( sBone ) : -1;
 
+#if CDK_VERSION <= 354
+                                    m_Bones[nBone].nJointID = m_pPose ? m_pPose->GetJointIDByName( sBone ) : -1;
+#else
+                                    m_Bones[nBone].nJointID = m_pChar ? m_pChar->GetIDefaultSkeleton().GetJointIDByName( sBone ) : -1;
+#endif
                                     // New Rotation
                                     Vec3 vRotation = GetPortVec3( pActInfo, n + 1 );
                                     Ang3 aRotation;
@@ -186,7 +190,12 @@ namespace AnimationPlugin
                                     {
                                         if ( m_bRelativeToDefaultPose )
                                         {
+#if CDK_VERSION <= 354
                                             QuatT qRel = m_pPose->GetDefaultRelJointByID( m_Bones[n].nJointID );
+#else
+                                            QuatT qRel = m_pChar->GetIDefaultSkeleton().GetDefaultRelJointByID( m_Bones[n].nJointID );
+#endif
+
                                             QuatT lQuat = m_pPose->GetRelJointByID( m_Bones[n].nJointID );
                                             qRel.t = lQuat.t;
                                             qRel.q *= m_Bones[n].qQuat.q;
@@ -352,7 +361,11 @@ namespace AnimationPlugin
                                 // Affected Bone
                                 int nBone = ( n - EIP_Start ) / 3;
                                 string sBone = GetPortString( pActInfo, n );
+#if CDK_VERSION <= 354
                                 m_Bones[nBone].nJointID = m_pPose ? m_pPose->GetJointIDByName( sBone ) : -1;
+#else
+                                m_Bones[nBone].nJointID = m_pChar ? m_pChar->GetIDefaultSkeleton().GetJointIDByName( sBone ) : -1;
+#endif
 
                                 if ( IsPortActive( pActInfo, n + 1 ) )
                                 {
@@ -392,7 +405,12 @@ namespace AnimationPlugin
                                     {
                                         if ( m_bRelativeToDefaultPose )
                                         {
+#if CDK_VERSION <= 354
                                             QuatT qRel = m_pPose->GetDefaultRelJointByID( m_Bones[n].nJointID );
+#else
+                                            QuatT qRel = m_pChar->GetIDefaultSkeleton().GetDefaultRelJointByID( m_Bones[n].nJointID );
+#endif
+
                                             qRel.t += m_Bones[n].qQuat.t;
                                             qRel.q *= m_Bones[n].qQuat.q;
 
